@@ -1,0 +1,13 @@
+.container {
+  overflow: hidden;
+  .piechart {
+    border: 1px solid #000;
+    float: left;
+    width: 50%;
+    height: 50%;
+    &:first-child {
+      width: 30%;
+      height: 30%;
+    }
+  }
+}
