@@ -2,7 +2,7 @@ import '../css/main.scss';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PieChart from './piechart/piechart';
+import PieChart from './piechart/pie-chart';
 
 class Application extends Component {
   render() {
