@@ -8,14 +8,31 @@ class PieChart extends Component {
     this.elementId = props.data[0].label + Math.floor((Math.random() * 1000) + 1); // just random id for svg element
   }
 
-  componentDidMount() {
-    var data = this.state.data;
+  // draw pie chart
+  drawSVG(data) {
+    let draw = SVG(this.elementId).viewbox({x: 0, y: 0, width: 400, height: 400});
+    data.forEach(o => {
+      draw.path("M200,200  L" + o.lineTo.x + "," + o.lineTo.y + "  A180,180 0 " + (o.procent > 180 ? "1" : "0") + ",1 " + o.ellipticalArcs.x + "," + o.ellipticalArcs.y + " z")
+          .fill(o.color);
+    });
+  }
 
+  componentDidMount() {
+    this.drawSVG(PieChart.makeCalculation(this.state.data));
+  }
+
+  render() {
+    return (
+      <div id={this.elementId} className="piechart" />
+    )
+  }
+
+  static makeCalculation(data) {
     // calculate the angles
-    var degrees = data.reduce( (previousValue, currentValue) => previousValue + currentValue.value, 0);
+    const degrees = data.reduce( (previousValue, currentValue) => previousValue + currentValue.value, 0);
 
     // calculate each sector and set all values
-    var startAngle = 0; var endAngle = 0; var procent;
+    let startAngle = 0; let endAngle = 0; let procent;
     data = data.map(o => {
       procent = PieChart.procent(o.value, degrees)
       startAngle = endAngle;
@@ -26,18 +43,7 @@ class PieChart extends Component {
       return o;
     })
 
-    // draw pie chart
-    var draw = SVG(this.elementId).viewbox({x: 0, y: 0, width: 400, height: 400});
-    data.forEach(o => {
-      draw.path("M200,200  L" + o.lineTo.x + "," + o.lineTo.y + "  A180,180 0 " + (o.procent > 180 ? "1" : "0") + ",1 " + o.ellipticalArcs.x + "," + o.ellipticalArcs.y + " z")
-          .fill(o.color);
-    });
-  }
-
-  render() {
-    return (
-      <div id={this.elementId} className="piechart" />
-    )
+    return data;
   }
 
   static x(angle) {
