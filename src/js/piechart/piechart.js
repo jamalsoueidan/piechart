@@ -1,9 +1,3 @@
-/** references
-# https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
-# http://www.codestore.net/store.nsf/unid/EPSD-5DTT4L
-# https://jbkflex.wordpress.com/2011/07/28/creating-a-svg-pie-chart-html5/
-**/
-
 import React, {Component} from 'react';
 import SVG from 'svgjs';
 
@@ -11,7 +5,7 @@ class PieChart extends Component {
   constructor(props) {
     super(props);
     this.state = {data: props.data}
-    this.elementId = props.data[0].label + Math.floor((Math.random() * 1000) + 1); // just random svg ids
+    this.elementId = props.data[0].label + Math.floor((Math.random() * 1000) + 1); // just random ids for svg element
   }
 
   componentDidMount() {
@@ -31,11 +25,13 @@ class PieChart extends Component {
 
     // draw pie chart
     var draw = SVG(this.elementId).viewbox({x: 0, y: 0, width: 400, height: 400});
-    var startAngle, endAngle = 0;
+    var startAngle, endAngle, arc_flag = 0;
     data.forEach(o => {
+      arc_flag = 0;
       startAngle = endAngle;
       endAngle = startAngle + o.procent;
-      var arc = draw.path("M200,200  L" + PieChart.x(startAngle) + "," + PieChart.y(startAngle)+ "  A180,180 0 0,1 " + PieChart.x(endAngle) + "," + PieChart.y(endAngle) + " z");
+      if (o.procent>180) { arc_flag = 1; }
+      var arc = draw.path("M200,200  L" + PieChart.x(startAngle) + "," + PieChart.y(startAngle)+ "  A180,180 0 " + arc_flag + ",1 " + PieChart.x(endAngle) + "," + PieChart.y(endAngle) + " z");
       arc.fill(o.color);
     });
   }

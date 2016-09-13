@@ -12,15 +12,13 @@ class Application extends Component {
       {value: 20, label: "kakao", color: "#02B3E7"},
       {value: 5, label: "nutella", color: "#CFD3D6"},
       {value: 25,label: "glasur", color: "#736D79"},
-      {value: 10, label: "slik", color: "#776068"},
       {value: 40, label: "pynt", color: "#FFEC62"}
     ];
 
     var data2 = [
-      {value: 25, label: "a", color: "#02B3E7"},
-      {value: 25, label: "b", color: "#CFD3D6"},
-      {value: 25,label: "c", color: "#736D79"},
-      {value: 25, label: "d", color: "#FFEC62"}
+      {value: 10, label: "a", color: "#02B3E7"},
+      {value: 35, label: "b", color: "#CFD3D6"},
+      {value: 55, label: "c", color: "#FFEC62"}
     ];
 
     return (
